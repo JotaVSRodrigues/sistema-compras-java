@@ -1,8 +1,11 @@
 package org.example.Classes;
 
 import org.example.Classes.Purchase;
+import org.example.Database.Service;
 
 import javax.smartcardio.Card;
+import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        Service service = new Service(); // serviço do banco de dados
 
         System.out.println("Digite o limite do seu cartão: ");
         float limitBalance = scanner.nextFloat();
@@ -57,6 +60,10 @@ public class Main {
 
         for (Purchase p : card.getPurchaseList()){
             System.out.println(p);
+        }
+
+        if (service.registerCard(limitBalance, card.getBalance() /*card.getPurchaseList()*/)) {
+            JOptionPane.showMessageDialog(null, "Cadastro no banco de dados realizado com sucesso");
         }
     }
 }
